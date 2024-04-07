@@ -14,8 +14,9 @@ public class DataContext(IConfiguration config)
         using var connection = CreateConnection();
         var sql = """
                 CREATE TABLE IF NOT EXISTS 
-                IpAdresses (
+                IpAddresses (
                     Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    Key TEXT,
                     RecievedDate TEXT,
                     IpAddress TEXT
                 );

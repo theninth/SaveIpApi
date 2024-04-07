@@ -1,12 +1,15 @@
 using SaveApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using SaveIpApi.Repositories;
+using SaveIpApi.Mappers;
 
 // https://jasonwatmore.com/net-7-dapper-sqlite-crud-api-tutorial-in-aspnet-core
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<DataContext>();
+builder.Services.AddTransient<IpAddressesRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -29,14 +32,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("updateip/{key}/", ([FromBody]IpRequest model, string key) => {
+app.MapPost("updateip/{key}/", async (IpAddressesRepository repository, [FromBody]IpRequest model, string key) =>
+{
+    await repository.Create(model.ToIpAdressEntity(key));
     Console.WriteLine($"{key}: {model.Ip}");
 })
 .WithName("UpdateIp")
 .WithOpenApi();
 
-
+var context = app.Services.GetRequiredService<DataContext>();
+await context.Init();
 
 app.Run();
 
-record IpRequest(string Ip);
+public record IpRequest(string Ip);
