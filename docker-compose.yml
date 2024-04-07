@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+    saveipapi:
+        image: ${DOCKER_REGISTRY-}saveipapi
+        build:
+            context: src
+            dockerfile: Dockerfile
+        volumes:
+            - saveapidata:/data
+volumes:
+    saveapidata:
