@@ -24,6 +24,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: src
-        file: ./Dockerfile
+        path: ./src
+        file: Dockerfile
         push: true
         tags: thenajnth/saveipapi:${{ github.run_number }}
