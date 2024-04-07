@@ -23,8 +23,8 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
-        context: src
-        path: ./src
+        context: ./src
+        path: .
         file: Dockerfile
         push: true
         tags: thenajnth/saveipapi:${{ github.run_number }}
