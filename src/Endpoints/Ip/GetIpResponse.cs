@@ -1,0 +1,1 @@
+﻿public record GetIpResponse(string Ip, string RecievedDate);
