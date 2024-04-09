@@ -1,6 +1,0 @@
-@SaveIpApi_HostAddress = http://localhost:5131
-
-GET {{SaveIpApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
