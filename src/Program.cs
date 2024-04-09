@@ -14,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
     .CreateLogger();
 
 builder.Logging.ClearProviders();
