@@ -20,7 +20,7 @@ public static class IpEndpoints
         })
         .AddEndpointFilter<ApiKeyAuthenticationEndpointFilter>();
 
-        app.MapPost("ip/{key}/", async (IpAddressesRepository repository, [FromBody]PostIpRequest model, string key) =>
+        app.MapPost("ip/{key}/", async (IpAddressesRepository repository, [FromBody] PostIpRequest model, string key) =>
         {
             await repository.Create(model.ToIpAdressEntity(key));
         })

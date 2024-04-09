@@ -11,5 +11,12 @@ services:
             - "8081"
         volumes:
             - saveapidata:/data
+    seq:
+        image: datalust/seq:latest
+        ports:
+          - "5342:80"
+        environment:
+          ACCEPT_EULA: "Y"
+        restart: unless-stopped
 volumes:
     saveapidata:
