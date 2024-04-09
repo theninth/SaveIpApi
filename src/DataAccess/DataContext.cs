@@ -1,4 +1,4 @@
-namespace SaveApi.Helpers;
+namespace SaveApi.DataAccess;
 
 using System.Data;
 using Dapper;
