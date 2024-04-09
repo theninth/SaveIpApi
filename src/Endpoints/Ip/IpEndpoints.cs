@@ -18,12 +18,16 @@ public static class IpEndpoints
             }
             return Results.NotFound();
         })
-.AddEndpointFilter<ApiKeyAuthenticationEndpointFilter>();
+        .AddEndpointFilter<ApiKeyAuthenticationEndpointFilter>();
 
-        app.MapPost("ip/{key}/", async (IpAddressesRepository repository, [FromBody] PostIpRequest model, string key) =>
+        app.MapPost("ip/{key}/", async (IpAddressesRepository repository, [FromBody]PostIpRequest model, string key) =>
         {
             await repository.Create(model.ToIpAdressEntity(key));
         })
         .AddEndpointFilter<ApiKeyAuthenticationEndpointFilter>();
     }
 }
+
+public record GetIpResponse(string Ip, string RecievedDate);
+
+public record PostIpRequest(string Ip);

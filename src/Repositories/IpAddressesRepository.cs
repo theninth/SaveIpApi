@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using SaveApi.DataAccess;
+using SaveIpApi.Endpoints.Ip;
 using SaveIpApi.Models;
 
 namespace SaveIpApi.Repositories;

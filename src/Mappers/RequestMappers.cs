@@ -1,4 +1,5 @@
-﻿using SaveIpApi.Models;
+﻿using SaveIpApi.Endpoints.Ip;
+using SaveIpApi.Models;
 
 namespace SaveIpApi.Mappers;
 
