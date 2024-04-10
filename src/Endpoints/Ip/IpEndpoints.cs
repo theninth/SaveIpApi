@@ -11,10 +11,10 @@ public static class IpEndpoints
     {
         app.MapGet("ip/{key}/", async (IpAddressesRepository repository, string key) =>
         {
-            var ip = await repository.GetLatest(key);
-            if (ip is not null)
+            var ipEntity = await repository.GetLatest(key);
+            if (ipEntity is not null)
             {
-                return Results.Ok(ip);
+                return Results.Ok(ipEntity.ToGetIpResponse());
             }
             return Results.NotFound();
         })
@@ -28,6 +28,6 @@ public static class IpEndpoints
     }
 }
 
-public record GetIpResponse(string Ip, string RecievedDate);
+public record GetIpResponse(DateTime RecievedDate, string Key, string IpAddress);
 
 public record PostIpRequest(string Ip);

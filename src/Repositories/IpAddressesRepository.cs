@@ -10,12 +10,23 @@ public class IpAddressesRepository(ILogger<IpAddressesRepository> logger, DataCo
     private readonly ILogger<IpAddressesRepository> _logger = logger;
     private readonly DataContext _context = context;
 
-    public async Task<GetIpResponse?> GetLatest(string key)
+    public async Task<IpAdressEntity?> GetLatest(string key)
     {
         using var connection = _context.CreateConnection();
         _logger.LogInformation("Recieved request for '{key}'.", key);
-        var sql = "SELECT IpAddress AS Ip, RecievedDate FROM IpAddresses WHERE Key = @Key ORDER BY RecievedDate DESC LIMIT 1";
-        return await connection.QueryFirstOrDefaultAsync<GetIpResponse>(sql, new { Key = key });
+        var sql = "SELECT RecievedDate, Key, IpAddress AS Ip FROM IpAddresses WHERE Key = @Key ORDER BY RecievedDate DESC LIMIT 1";
+        var value = await connection.QueryFirstOrDefaultAsync<dynamic> (sql, new { Key = key });
+        if (value is not null)
+        {
+            DateTime recievedDate = DateTime.MinValue;
+            if (DateTime.TryParse(value.RecievedDate, out DateTime dt))
+            {
+                recievedDate = dt;
+            };
+
+            return new IpAdressEntity(recievedDate, value.Key, value.Ip);
+        }
+        return null;
     }
 
     public async Task Create(IpAdressEntity ipAdress)
