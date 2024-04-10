@@ -3,12 +3,14 @@ using Serilog;
 using SaveIpApi.Repositories;
 using SaveIpApi.Models.Options;
 using SaveIpApi.Endpoints.Ip;
+using SaveIpApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<AppAuthenticationOptions>(builder.Configuration.GetSection(AppAuthenticationOptions.SectionName));
 builder.Services.AddTransient<DataContext>();
 builder.Services.AddTransient<IpAddressesRepository>();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddEndpointsApiExplorer();
 
