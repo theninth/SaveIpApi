@@ -3,7 +3,7 @@
 
 A simple key/value store based on sqlite.
 
-## Example produktion docker-compose.yaml -file
+## Example produktion docker-compose.yaml file
 
 ```yaml
 services:
@@ -48,3 +48,30 @@ AUTHENTICATION__APIKEY=MySuperSecretApiKey
 - **saveipapi** - Main application
 - **sqliteweb** - DB Web UI
 - **seq** - Logs WebUI
+
+## Start interacting with database
+
+### Storing
+
+This is an example how you can store your public ip address with some help of
+[ipify](https://www.ipify.org/) from a simple shell script.
+
+```sh
+#!/bin/sh
+MYIP_AS_JSON=$(curl 'https://api.ipify.org?format=json')
+curl -H 'Content-Type: application/json'                  \
+     -H 'ApiKey: changeme'                                \
+     -d "$MYIP_AS_JSON"                                   \
+     -X POST                                              \
+     https://saveipapi.example.com/ip/some_key
+```
+
+Change saveipapi url, apikey and probably the value "some_key" to something more relevant.
+
+Or you can use [PyUpdateSaveIpAPI](https://github.com/theninth/PyUpdateSaveIpApi).
+
+### Retrieving
+
+```sh
+curl -H 'ApiKey: changeme' https://saveipapi.example.com/ip/some_key
+```
